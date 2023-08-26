@@ -27,12 +27,12 @@ npm install
 ## Usage
 
 ```Mongodb
-Connect to any mongodb
+# Connect to any mongodb
 
 # JWT 'Json web tokens'
 create a jwt secret 
 
-# returns 'port'
+# Set 'port'
 Choose any port you like
 
 ```
