@@ -4,6 +4,7 @@ import connectDB from "./config/db.js";
 import express, { urlencoded } from "express";
 import ProductRoutes from "./routs/productRouts.js";
 import UserRoutes from "./routs/userRoutes.js";
+import orderRouts from "./routs/orderRouts.js";
 import cookieParser from "cookie-parser";
 import { notFound, errorHandler } from "./Middleware/errorMIddleware.js";
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/product", ProductRoutes);
 app.use("/api/users", UserRoutes);
+app.use("/api/orders", orderRouts);
 app.use(notFound);
 app.use(errorHandler);
 

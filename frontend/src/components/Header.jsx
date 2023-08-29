@@ -1,14 +1,28 @@
 import React from "react";
-import { Badge, Nav, Navbar, Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Badge, Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import { LinkContainer } from "react-router-bootstrap";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { useLogoutMutation } from "../Slice/userApiSlice";
+import { logout } from "../Slice/authSlice";
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
-  console.log(cartItems);
+  // console.log(cartItems);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [logoutApiCall] = useLogoutMutation();
+  const logoutHandler = async () => {
+    try {
+      await logoutApiCall().unwrap();
+      dispatch(logout());
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
@@ -22,12 +36,23 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-bar" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto ">
-              <LinkContainer to="/login">
-                <Nav.Link className="px-3">
-                  User
-                  <FaUser />
-                </Nav.Link>
-              </LinkContainer>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link className="px-3">
+                    User
+                    <FaUser />
+                  </Nav.Link>
+                </LinkContainer>
+              )}
               <LinkContainer to="/Cart">
                 <Nav.Link className="px-3">
                   Cart
