@@ -29,6 +29,9 @@ const CartScreen = () => {
   return (
     <Row>
       <Col md={8}>
+        <Link className="btn btn-light my-3" to="/">
+          Go Back
+        </Link>
         <h3 style={{ marginBottom: "20px" }}>Your Shopping Cart</h3>
         {cartItems.length === 0 ? (
           <Message>
