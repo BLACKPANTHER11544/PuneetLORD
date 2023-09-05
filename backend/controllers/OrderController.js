@@ -79,7 +79,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       email_address: req.body.payer.email_address,
     };
     const updateOrder = await order.save();
-    res.status(200).json(updatedOrder);
+    res.status(200).json(updateOrder);
   } else {
     res.status(404);
     throw new Error("Order not found");
