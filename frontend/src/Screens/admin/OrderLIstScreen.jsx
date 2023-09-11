@@ -3,7 +3,7 @@ import { useGetOrdersQuery } from "../../Slice/orderApiSlice";
 import Message from "../../components/Message";
 import Loader from "../../components/Loader";
 import { FaTimes } from "react-icons/fa";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 const OrderLIstScreen = () => {
   const { data: orders, isLoading, error } = useGetOrdersQuery();
   console.log(orders);
@@ -24,6 +24,7 @@ const OrderLIstScreen = () => {
               <th>TOTAL</th>
               <th>PAID</th>
               <th>DELIVERED</th>
+              <th>Order Info</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +47,13 @@ const OrderLIstScreen = () => {
                   ) : (
                     <FaTimes style={{ color: "red" }} />
                   )}
+                </td>
+                <td>
+                  <LinkContainer to={`/order/${order._id}`}>
+                    <Button variant="light" className="btn-sm">
+                      Details
+                    </Button>
+                  </LinkContainer>
                 </td>
               </tr>
             ))}
