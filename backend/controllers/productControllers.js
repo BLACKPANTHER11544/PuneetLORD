@@ -16,4 +16,20 @@ const getProductById = asyncHanlder(async (req, res) => {
   }
 });
 
-export { getProductById, getProducts };
+const createProduct = asyncHanlder(async (req, res) => {
+  const product = new ModelProduct({
+    name: "Sample name",
+    price: 0,
+    user: req.user._id,
+    image: "/image/sample.jpg",
+    brand: "Sample Brand",
+    catergory: "Sample Category",
+    countInStock: 0,
+    numReviews: 0,
+    description: "Sample description",
+  });
+  const createdProduct = await product.save();
+  res.status(201).json(createdProduct);
+});
+
+export { getProductById, getProducts, createProduct };
